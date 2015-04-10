@@ -1,6 +1,13 @@
+@import ../../css/mixins.sass
+
 .Grid
   height: 100%
   width: 100%
 
 .Track
   float: left
+
+  .trackNumber
+    @extend %vertical-align
+    font-size: 64px
+    text-align: center

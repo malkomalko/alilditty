@@ -13,7 +13,7 @@ class Track extends React.Component {
   }
   render() {
     return <div className="Track" style={this.trackStyles(this.props.index)}>
-
+      <p className="trackNumber">{this.props.index + 1}</p>
     </div>
   }
   trackStyles(i) {
