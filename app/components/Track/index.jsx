@@ -4,9 +4,17 @@ import {EventNames} from '../../events'
 var Wad = require('wad')
 require('./style.sass')
 
-var piano = new Wad({
-  source: "https://dl.dropboxusercontent.com/u/49242076/alilditty/piano.mp3",
-})
+var rootUrl = 'https://dl.dropboxusercontent.com/u/49242076/alilditty'
+var sources = [
+  new Wad({ source: `${rootUrl}/piano.mp3` }),
+  new Wad({ source: `${rootUrl}/guitarverb.mp3` }),
+  new Wad({ source: `${rootUrl}/guitartremolo.mp3` }),
+  new Wad({ source: `${rootUrl}/electricbass.mp3` }),
+  new Wad({ source: `${rootUrl}/piano.mp3` }),
+  new Wad({ source: `${rootUrl}/guitarverb.mp3` }),
+  new Wad({ source: `${rootUrl}/guitartremolo.mp3` }),
+  new Wad({ source: `${rootUrl}/electricbass.mp3` }),
+]
 
 var keyCodes = [
   81, 87, 69, 82, 84, 89, 85,
@@ -65,7 +73,7 @@ export default class Track extends React.Component {
   constructor(props) {
     super(props)
 
-    piano.play({ env: { hold: 0 }})
+    sources[this.props.index].play({ env: { hold: 0 }})
     this.setupEvents()
   }
   render() {
@@ -78,20 +86,15 @@ export default class Track extends React.Component {
   }
   setupEvents() {
     var index = this.props.index
+
     this.props.events.on(`track:${index}:playNote`, (payload) => {
       var eventType = payload.e.type
       var keyCode = payload.e.keyCode
 
       if (eventType === 'keydown') {
-        var pitchIndex = keyCodes.indexOf(keyCode)
-        if (pitchIndex < 0) { return }
-        var pitch = noteNames[pitchIndex]
-        var rate = (Wad.pitches[pitch] / Wad.pitches.C2)
-
-        piano.play({
-          rate: rate,
-          env: { hold: 4 },
-        })
+        this.playNote(keyCode)
+      } else {
+        this.stopNote(keyCode)
       }
     })
   }
@@ -104,5 +107,16 @@ export default class Track extends React.Component {
   }
   isCurrentSelection() {
     return this.props.index === this.props.selectedTrack
+  }
+  playNote(keyCode) {
+    var pitchIndex = keyCodes.indexOf(keyCode)
+    if (pitchIndex < 0) { return }
+    var pitch = noteNames[pitchIndex]
+    var rate = (Wad.pitches[pitch] / Wad.pitches.C2)
+
+    sources[this.props.index].play({ rate: rate, env: { hold: 15 }})
+  }
+  stopNote(keyCode) {
+
   }
 }
