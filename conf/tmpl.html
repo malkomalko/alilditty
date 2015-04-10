@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>alilditty</title>
+    {% if (o.htmlWebpackPlugin.options.production) { %}
+    <link rel="stylesheet" href="app.{%=o.webpack.hash%}.css" media="all">
+    {% } %}
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script src="{%=o.htmlWebpackPlugin.assets.main%}"></script>
+  </body>
+</html>
