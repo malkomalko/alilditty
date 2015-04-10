@@ -30,6 +30,9 @@ export default class Application extends React.Component {
 
     this.setupEvents()
   }
+  componentDidMount() {
+    React.findDOMNode(this).focus()
+  }
   render() {
     return <HotKeys keyMap={keyMap} handlers={this.handlers()}>
       <div className="Application" onWheel={this.onWheel}>
