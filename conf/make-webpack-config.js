@@ -1,6 +1,7 @@
 var fs = require('fs');
 var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var BowerWebpackPlugin = require('bower-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 function extractForProduction(loaders) {
@@ -37,14 +38,14 @@ module.exports = function(options) {
       preLoaders: options.lint ? [
         {
           test: /\.jsx?$/,
-          exclude: /node_modules/,
+          exclude: [/bower_components/, /node_modules/],
           loader: 'eslint',
         },
       ] : [],
       loaders: [
         {
           test: /\.js$/,
-          exclude: /node_modules/,
+          exclude: [/bower_components/, /node_modules/],
           loaders: jsLoaders,
         },
         {
@@ -103,11 +104,13 @@ module.exports = function(options) {
         },
       }),
       new ExtractTextPlugin("app.[hash].css"),
+      new BowerWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: './conf/tmpl.html',
         production: true,
       }),
     ] : [
+      new BowerWebpackPlugin(),
       new HtmlWebpackPlugin({
         template: './conf/tmpl.html',
       }),

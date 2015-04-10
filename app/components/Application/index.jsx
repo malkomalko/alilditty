@@ -1,8 +1,9 @@
 import React from 'react'
 import {Events, EventNames} from '../../events'
 import Grid from '../Grid'
-import {HotKeys} from 'react-hotkeys';
+import {HotKeys} from 'react-hotkeys'
 
+window.wad = require('wad')
 require('./style.sass')
 
 const keyMap = {
