@@ -90,11 +90,15 @@ export default class Track extends React.Component {
     this.props.events.on(`track:${index}:playNote`, (payload) => {
       var eventType = payload.e.type
       var keyCode = payload.e.keyCode
+      var pitchIndex = keyCodes.indexOf(keyCode)
+      if (pitchIndex < 0) { return }
+      var label = noteNames[pitchIndex]
+      var pitch = Wad.pitches[label]
 
       if (eventType === 'keydown') {
-        this.playNote(keyCode)
+        this.playNote(pitch, label)
       } else {
-        this.stopNote(keyCode)
+        this.stopNote(pitch, label)
       }
     })
   }
@@ -108,15 +112,16 @@ export default class Track extends React.Component {
   isCurrentSelection() {
     return this.props.index === this.props.selectedTrack
   }
-  playNote(keyCode) {
-    var pitchIndex = keyCodes.indexOf(keyCode)
-    if (pitchIndex < 0) { return }
-    var pitch = noteNames[pitchIndex]
-    var rate = (Wad.pitches[pitch] / Wad.pitches.C2)
+  playNote(pitch, label) {
+    var rate = (pitch / Wad.pitches.C2)
 
-    sources[this.props.index].play({ rate: rate, env: { hold: 15 }})
+    sources[this.props.index].play({
+      label: label,
+      rate: rate,
+      env: { hold: 15, release: 0.4 },
+    })
   }
-  stopNote(keyCode) {
-
+  stopNote(pitch, label) {
+    sources[this.props.index].stop(label)
   }
 }
