@@ -1,13 +1,14 @@
 {
   "parser": "babel-eslint",
   "rules": {
-    "strict": 0,
     "comma-dangle": [2, "always-multiline"],
-    "quotes": "single",
+    "new-cap": 0,
     "no-underscore-dangle": 0,
+    "quotes": "single",
+    "strict": 0,
   },
   "globals": {
-    "require": true,
     "document": true,
+    "require": true,
   },
 }

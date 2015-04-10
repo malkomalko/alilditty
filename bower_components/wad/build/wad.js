@@ -306,7 +306,7 @@ Check out http://www.voxengo.com/impulses/ for free impulse responses. **/
         }, function(error) { console.log('Error setting up microphone input: ', error); }); // This is the error callback.
     };
 ////////////////////////////////////////////////////////////////////
-    
+
     var setUpMic = function(that, arg){
         that.nodes           = [];
         that.gain            = context.createGain();
@@ -431,7 +431,7 @@ with special handling for nodes with custom interfaces (e.g. reverb, delay). **/
             }
             from.connect(to);
         }
-        if ( that.nodes[that.nodes.length-1].interface === 'custom') { 
+        if ( that.nodes[that.nodes.length-1].interface === 'custom') {
             var lastStop = that.nodes[that.nodes.length-1].output;
         }
         else { // assume native interface
@@ -677,7 +677,7 @@ then finally play the sound by calling playEnv() **/
             this.playOnLoadArg = arg;
         }
 
-        else if ( this.source === 'mic' ) { 
+        else if ( this.source === 'mic' ) {
             if ( arg.arg === null ) {
                 plugEmIn(this, arg);
             }
@@ -707,6 +707,9 @@ then finally play the sound by calling playEnv() **/
             else {
                 this.soundSource = context.createBufferSource();
                 this.soundSource.buffer = this.decodedBuffer;
+                if ( arg.rate ) {
+                  this.soundSource.playbackRate.value = arg.rate;
+                }
                 if ( this.source === 'noise' || this.loop || arg.loop ) {
                     this.soundSource.loop = true;
                 }
@@ -1355,7 +1358,7 @@ var valueOrDefault = function(value, def) {
         // console.log('inputs: ', m.inputs)
         // Things you can do with the MIDIAccess object:
         for ( var input in midiAccess.inputs.values() ) {
-            console.log(input) 
+            console.log(input)
         }
         Wad.midiInputs = []
         var val = midiAccess.inputs.values();
