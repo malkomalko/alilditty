@@ -21,8 +21,11 @@ export default class Application extends React.Component {
     }
   }
   render() {
-    return <div className="Application">
+    return <div className="Application" onWheel={this.onWheel}>
       <Grid rows={2} cols={4} state={this.state} />
     </div>
+  }
+  onWheel(e) {
+    e.preventDefault()
   }
 }
