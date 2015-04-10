@@ -1,6 +1,7 @@
-import React from 'react';
+import React from 'react'
+import {EventNames} from '../../events'
 
-require('./style.sass');
+require('./style.sass')
 
 var gridColors = [
   '#F58E99', '#6AC6D6', '#FFEE81', '#FCC886',
@@ -12,9 +13,14 @@ class Track extends React.Component {
     super(props)
   }
   render() {
-    return <div className="Track" style={this.trackStyles(this.props.index)}>
+    return <div className="Track" style={this.trackStyles(this.props.index)}
+      onClick={this.onClick.bind(this)}>
       <p className="trackNumber">{this.props.index + 1}</p>
     </div>
+  }
+  onClick(e) {
+    var index = this.props.index
+    this.props.events.emit(EventNames.SELECTED_TRACK, index)
   }
   trackStyles(i) {
     return {
@@ -28,15 +34,10 @@ class Track extends React.Component {
 export default class Grid extends React.Component {
   constructor(props) {
     super(props)
-
-    this.state = props.state;
   }
   render() {
-    const tracks = this.state.tracks.map((track, i) => {
-      return <Track key={i} index={i}
-        track={this.state.tracks[i]}
-        cols={this.props.cols}
-        rows={this.props.rows} />
+    const tracks = this.props.tracks.map((track, i) => {
+      return <Track {...this.props} key={i} index={i} />
     })
     return <div className="Grid">
       {tracks}
