@@ -13,22 +13,59 @@ class Track extends React.Component {
     super(props)
   }
   render() {
-    return <div className="Track" style={this.trackStyles(this.props.index)}
+    return <div className="Track" style={Track.styles.base(this)}
       onClick={this.onClick.bind(this)}>
-      <p className="trackNumber">{this.props.index + 1}</p>
+      <p className="trackNumber" style={Track.styles.trackNumber(this)}>
+        {this.props.index + 1}
+      </p>
     </div>
   }
   onClick(e) {
     var index = this.props.index
+    if (this.isCurrentSelection()) {
+      index = null
+    }
     this.props.events.emit(EventNames.SELECTED_TRACK, index)
   }
-  trackStyles(i) {
-    return {
-      backgroundColor: gridColors[i],
-      height: (100 / this.props.rows) + '%',
-      width: (100 / this.props.cols) + '%',
-    }
+  isCurrentSelection() {
+    return this.props.index === this.props.selectedTrack
   }
+}
+
+Track.styles = {
+  base(self) {
+    var currentlySelected = self.isCurrentSelection()
+    var height = (100 / self.props.rows) + '%'
+    var width = (100 / self.props.cols) + '%'
+    var top = ~~(self.props.index / self.props.cols) / self.props.rows
+    var left = (self.props.index % self.props.cols) / self.props.cols
+
+    var styles = {
+      backgroundColor: gridColors[self.props.index],
+      height: currentlySelected ? '100%' : height,
+      left: (left * 100) + '%',
+      top: (top * 100) + '%',
+      width: currentlySelected ? '100%' : width,
+    }
+
+    if (currentlySelected) {
+      styles.top = 0
+      styles.left = 0
+      styles.zIndex = 100
+    }
+
+    return styles
+  },
+  trackNumber(self) {
+    var currentlySelected = self.isCurrentSelection()
+    var styles = {}
+
+    if (currentlySelected) {
+      styles.top = 100
+    }
+
+    return styles
+  },
 }
 
 export default class Grid extends React.Component {
