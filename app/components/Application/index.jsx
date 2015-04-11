@@ -81,6 +81,7 @@ export default class Application extends React.Component {
           trackNumber = null
         }
         this.setState({ selectedTrack: trackNumber })
+        this.state.events.emit(EventNames.STATE_SELECTED_TRACK, trackNumber)
       },
     }
   }

@@ -88,18 +88,11 @@ export default class Track extends React.Component {
     var index = this.props.index
 
     this.props.events.on(`track:${index}:playNote`, (payload) => {
-      var eventType = payload.e.type
-      var keyCode = payload.e.keyCode
-      var pitchIndex = keyCodes.indexOf(keyCode)
-      if (pitchIndex < 0) { return }
-      var label = noteNames[pitchIndex]
-      var pitch = Wad.pitches[label]
+      this.playOrStopNote(payload)
+    })
 
-      if (eventType === 'keydown') {
-        this.playNote(pitch, label)
-      } else {
-        this.stopNote(pitch, label)
-      }
+    this.props.events.on(EventNames.STATE_SELECTED_TRACK, (index) => {
+      this.stopAllNotes(this.props.index)
     })
   }
   onClick(e) {
@@ -112,6 +105,20 @@ export default class Track extends React.Component {
   isCurrentSelection() {
     return this.props.index === this.props.selectedTrack
   }
+  playOrStopNote(payload) {
+    var eventType = payload.e.type
+    var keyCode = payload.e.keyCode
+    var pitchIndex = keyCodes.indexOf(keyCode)
+    if (pitchIndex < 0) { return }
+    var label = noteNames[pitchIndex]
+    var pitch = Wad.pitches[label]
+
+    if (eventType === 'keydown') {
+      this.playNote(pitch, label)
+    } else {
+      this.stopNote(pitch, label)
+    }
+  }
   playNote(pitch, label) {
     var rate = (pitch / Wad.pitches.C2)
 
@@ -123,5 +130,10 @@ export default class Track extends React.Component {
   }
   stopNote(pitch, label) {
     sources[this.props.index].stop(label)
+  }
+  stopAllNotes(index) {
+    noteNames.forEach((label) => {
+      sources[index].stop(label)
+    })
   }
 }
