@@ -17,7 +17,8 @@
   "dependencies": {
     "events": "^1.0.2",
     "mousetrap": "^1.5.2",
-    "react": "~0.13.0"
+    "react": "~0.13.0",
+    "tone": "^0.4.2"
   },
   "devDependencies": {
     "autoprefixer-loader": "^1.2.0",

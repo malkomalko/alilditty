@@ -1,6 +1,7 @@
 import React from 'react'
 import {Events, EventNames} from '../../events'
 import Grid from '../Grid'
+import Transport from '../Transport'
 
 var Mousetrap = require('mousetrap')
 require('./style.sass')
@@ -43,6 +44,7 @@ export default class Application extends React.Component {
   render() {
     return <div className="Application" onWheel={this.onWheel}>
       <Grid {...this.state} rows={2} cols={4} />
+      <Transport {...this.state} />
     </div>
   }
   setupEvents() {
