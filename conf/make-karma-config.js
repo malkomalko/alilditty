@@ -9,6 +9,7 @@ module.exports = function(options) {
     files: [
       // This shim adds .bind to PhantomJS
       './phantomjs-shim.js',
+      './webaudio.externs.js',
       '../app/**/__tests__/*.js',
     ],
 
