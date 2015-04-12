@@ -3,6 +3,12 @@ import {Events, EventNames} from '../../events'
 
 require('./style.sass')
 
+var keyCodes = [
+  [81, 87, 69, 82, 84, 89, 85],
+  [65, 83, 68, 70, 71, 72, 74],
+  [90, 88, 67, 86, 66, 78, 77],
+]
+
 var keys = [
   ['q', 'w', 'e', 'r', 't', 'y', 'u'],
   ['a', 's', 'd', 'f', 'g', 'h', 'j'],
@@ -20,8 +26,8 @@ export default class KeysVisualizer extends React.Component {
   render() {
     var renderedKeys = keys.map((keyRow, row) => {
       var keyForRow = `row-${row}`
-      var keysForRow = keyRow.map((key) => {
-        return <div className='key ' key={key} ref={key}>
+      var keysForRow = keyRow.map((key, index) => {
+        return <div className='key ' key={key} ref={keyCodes[row][index]}>
           <p>{key}</p>
         </div>
       })
@@ -34,10 +40,21 @@ export default class KeysVisualizer extends React.Component {
     </div>
   }
   setupEvents() {
+    var index = this.props.index
 
+    this.onPlayNote = (payload) => {
+      var ref = this.refs[payload.e.keyCode]
+      var el = ref.getDOMNode()
+      if (payload.e.type === 'keydown') {
+        el.classList.add('active')
+      } else {
+        el.classList.remove('active')
+      }
+    }
+
+    this.props.events.on(`track:${index}:playNote`, this.onPlayNote)
   }
   componentDidMount() {
-    // called once after initial render => React.findDOMNode(this)
     this.animateUp()
   }
   componentWillReceiveProps(nextProps) {
@@ -47,7 +64,8 @@ export default class KeysVisualizer extends React.Component {
     // make dom updates
   }
   componentWillUnmount() {
-    // clean up events
+    var index = this.props.index
+    this.props.events.removeListener(`track:${index}:playNote`, this.onPlayNote)
   }
   animateUp() {
     setTimeout(() => {
