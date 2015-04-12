@@ -1,6 +1,7 @@
 import React from 'react'
 import {EventNames} from '../../events'
 import KeysVisualizer from '../KeysVisualizer'
+import MiniClips from '../MiniClips'
 
 var Wad = require('wad')
 require('./style.sass')
@@ -78,17 +79,24 @@ export default class Track extends React.Component {
     this.setupEvents()
   }
   render() {
-    var keys = this.isCurrentSelection()
-      ? <KeysVisualizer {...this.props} />
-      : null
-
     return <div className="Track" style={style.base(this)}
       onClick={this.onClick.bind(this)}>
       <p className="trackNumber" style={style.trackNumber(this)}>
         {this.props.index + 1}
       </p>
-      {keys}
+      {this.miniClips()}
+      {this.keysVisualizer()}
     </div>
+  }
+  miniClips() {
+    return this.isCurrentSelection()
+      ? <MiniClips {...this.props} />
+      : null
+  }
+  keysVisualizer() {
+    return this.isCurrentSelection()
+      ? <KeysVisualizer {...this.props} />
+      : null
   }
   setupEvents() {
     var index = this.props.index
