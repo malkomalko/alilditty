@@ -1,0 +1,31 @@
+@import ../../css/mixins.sass
+
+.KeysVisualizer
+  background: rgba(0,0,0,0.20);
+  border-radius: 6px;
+  bottom: -2000px
+  height: calc(100% - 250px)
+  margin: 0 50px
+  padding: 20px
+  position: absolute
+  transition: all 0.3s ease-in-out
+  width: calc(100% - 100px)
+
+  .keyRow
+    float: left
+    height: calc((100% / 3))
+    margin: 0
+    width: 100%
+
+    .key
+      background-color: white
+      border-radius: 6px
+      border: 1px solid #333333
+      float: left
+      height: 100%
+      width: calc(100% / 7)
+
+      p
+        @extend %vertical-align
+        font-size: 20px
+        text-align: center

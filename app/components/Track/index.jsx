@@ -1,5 +1,6 @@
 import React from 'react'
 import {EventNames} from '../../events'
+import KeysVisualizer from '../KeysVisualizer'
 
 var Wad = require('wad')
 require('./style.sass')
@@ -77,11 +78,16 @@ export default class Track extends React.Component {
     this.setupEvents()
   }
   render() {
+    var keys = this.isCurrentSelection()
+      ? <KeysVisualizer {...this.props} />
+      : null
+
     return <div className="Track" style={style.base(this)}
       onClick={this.onClick.bind(this)}>
       <p className="trackNumber" style={style.trackNumber(this)}>
         {this.props.index + 1}
       </p>
+      {keys}
     </div>
   }
   setupEvents() {
