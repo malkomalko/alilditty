@@ -70,6 +70,6 @@ export default class KeysVisualizer extends React.Component {
   animateUp() {
     setTimeout(() => {
       React.findDOMNode(this).style.bottom = '100px'
-    }, 300)
+    }, 100)
   }
 }
