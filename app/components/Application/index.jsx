@@ -22,6 +22,9 @@ export default class Application extends React.Component {
     super(props)
 
     this.state = {
+      activeClips: [
+        0, 0, 0, 0, 0, 0, 0, 0,
+      ],
       events: new Events(),
       selectedTrack: null,
       tracks: [
@@ -56,6 +59,12 @@ export default class Application extends React.Component {
 
     this.state.events.on(EventNames.STATE_SELECTED_TRACK, (index) => {
       this.setState({ selectedTrack: index })
+    })
+
+    this.state.events.on(EventNames.STATE_CLIP_CHANGE, (payload) => {
+      var activeClips = this.state.activeClips.slice()
+      activeClips[payload.track] = payload.clip
+      this.setState({ activeClips: activeClips })
     })
   }
   onWheel(e) {
