@@ -32,13 +32,16 @@ export default class Transport extends React.Component {
         type="ion-record" size="64px"
         color="#FFFFFF" hoverColor="#555555" onColor="#111111"
         onToggle={this.onRecordClick.bind(this)} />
-      <ToggleIcon className="Metronome"
+      <ToggleIcon ref="Metronome" className="Metronome"
         type="ion-ios-time-outline" size="64px"
         color="#FFFFFF" hoverColor="#555555" onColor="#111111"
         onToggle={this.onMetroClick.bind(this)} />
     </div>
   }
   componentDidUpdate(prevProps, prevState) {
+    this.metroOn = this.props.toggles.metro
+    this.recordOn = this.props.toggles.recording
+    this.refs.Metronome.setState({ on: this.props.toggles.metro })
     this.refs.Record.setState({ on: this.props.toggles.recording })
   }
   setActiveStyles() {
@@ -67,7 +70,7 @@ export default class Transport extends React.Component {
   }
   playMetro(step) {
     metro.play({
-      volume: 0.4,
+      volume: 0.3,
       pitch: step === 0 ? 'C4' : 'C3',
       env: { hold: 0.3, release: 0.3 },
     })

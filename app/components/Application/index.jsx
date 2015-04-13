@@ -10,6 +10,7 @@ var Mousetrap = require('mousetrap')
 var pressedKeys = {}
 
 const keyMap = {
+  'armMetro': { type: 'toggle', keys: ['ctrl+m'] },
   'armRecord': { type: 'toggle', keys: ['space'] },
   'playNote': [
     'q', 'w', 'e', 'r', 't', 'y', 'u',
@@ -30,6 +31,7 @@ export default class Application extends React.Component {
       events: new Events(),
       selectedTrack: null,
       toggles: {
+        metro: false,
         recording: false,
       },
       tracks: [
@@ -81,6 +83,11 @@ export default class Application extends React.Component {
   }
   handlers() {
     return {
+      'armMetro': (e) => {
+        var toggles = this.state.toggles
+        toggles.metro = !this.state.toggles.metro
+        this.setState({ toggles: toggles })
+      },
       'armRecord': (e) => {
         var toggles = this.state.toggles
         toggles.recording = !this.state.toggles.recording
