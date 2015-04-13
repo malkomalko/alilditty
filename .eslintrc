@@ -3,6 +3,7 @@
   "rules": {
     "comma-dangle": [2, "always-multiline"],
     "new-cap": 0,
+    "no-debugger": 0,
     "no-underscore-dangle": 0,
     "quotes": "single",
     "strict": 0,
