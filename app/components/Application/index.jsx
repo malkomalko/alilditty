@@ -2,7 +2,7 @@ import React from 'react'
 import {Events, EventNames} from '../../events'
 import Grid from '../Grid'
 import Transport from '../Transport'
-import Icon from '../Icon'
+import ToggleIcon from '../ToggleIcon'
 
 require('./style.sass')
 require('../../css/ionicons.css')
@@ -50,9 +50,9 @@ export default class Application extends React.Component {
     return <div className="Application" onWheel={this.onWheel}>
       <Grid {...this.state} rows={2} cols={4} />
       <Transport {...this.state} />
-      <Icon className="metro" onClick={this.onMetroClick.bind(this)}
+      <ToggleIcon className="metro" onClick={this.onMetroClick.bind(this)}
         type="ion-ios-time-outline" size="64px"
-        color="#FFF" hoverColor="#111" />
+        color="#FFFFFF" hoverColor="#555555" onColor="#111111" />
     </div>
   }
   setupEvents() {

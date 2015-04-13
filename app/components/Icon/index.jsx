@@ -2,6 +2,7 @@ import React from 'react'
 import {Events, EventNames} from '../../events'
 
 require('./style.sass')
+var colorUtils = require('../../utilities/color')
 
 export default class Icon extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export default class Icon extends React.Component {
   }
   setupEvents() { }
   onMouseEnter(e) {
+    this.oldColor = colorUtils.rgb2hex(this.el.style.color)
     this.el.style.cursor = 'pointer'
     if (this.props.hoverColor) {
       this.el.style.color = this.props.hoverColor
@@ -27,7 +29,10 @@ export default class Icon extends React.Component {
   }
   onMouseLeave(e) {
     this.el.style.cursor = 'auto'
-    this.el.style.color = this.props.color
+    var color = colorUtils.rgb2hex(this.el.style.color)
+    if (color === this.props.hoverColor) {
+      this.el.style.color = this.oldColor
+    }
   }
   componentDidMount() {
     this.el = React.findDOMNode(this)
