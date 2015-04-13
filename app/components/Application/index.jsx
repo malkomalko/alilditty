@@ -50,9 +50,11 @@ export default class Application extends React.Component {
     return <div className="Application" onWheel={this.onWheel}>
       <Grid {...this.state} rows={2} cols={4} />
       <Transport {...this.state} />
-      <ToggleIcon className="metro" onClick={this.onMetroClick.bind(this)}
+      <ToggleIcon className="metro"
         type="ion-ios-time-outline" size="64px"
-        color="#FFFFFF" hoverColor="#555555" onColor="#111111" />
+        color="#FFFFFF" hoverColor="#555555" onColor="#111111"
+        onToggle={this.onMetroClick.bind(this)}
+      />
     </div>
   }
   setupEvents() {
@@ -75,8 +77,18 @@ export default class Application extends React.Component {
   onWheel(e) {
     e.preventDefault()
   }
-  onMetroClick(e) {
-    console.log('on metro click')
+  onMetroClick(isOn, component) {
+    if (isOn) {
+      this.turnOnMetronome()
+    } else {
+      this.turnOffMetronome()
+    }
+  }
+  turnOnMetronome() {
+    console.log('metro on')
+  }
+  turnOffMetronome() {
+    console.log('metro off')
   }
   handlers() {
     return {

@@ -18,6 +18,7 @@ export default class ToggleIcon extends React.Component {
     </div>
   }
   setupEvents() { }
+  componentWillMount() { }
   componentDidMount() {
     this.el = React.findDOMNode(this)
   }
@@ -27,7 +28,11 @@ export default class ToggleIcon extends React.Component {
   }
   componentWillUnmount() { }
   onClick(e) {
-    this.setState({ on: !this.state.on })
+    var on = !this.state.on
+    this.setState({ on })
+    if (this.props.onToggle) {
+      this.props.onToggle(on, this)
+    }
   }
   setupStyles() {
     var icon = this.el.getElementsByClassName('icon')[0]
