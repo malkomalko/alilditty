@@ -1,8 +1,8 @@
 import React from 'react'
 import {Events, EventNames} from '../../events'
 
-var Tone = require('tone')
 require('./style.sass')
+var Tone = require('tone')
 
 export default class Transport extends React.Component {
   constructor(props) {

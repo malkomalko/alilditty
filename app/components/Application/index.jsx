@@ -3,8 +3,9 @@ import {Events, EventNames} from '../../events'
 import Grid from '../Grid'
 import Transport from '../Transport'
 
-var Mousetrap = require('mousetrap')
 require('./style.sass')
+require('../../css/ionicons.css')
+var Mousetrap = require('mousetrap')
 
 var pressedKeys = {}
 

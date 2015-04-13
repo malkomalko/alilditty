@@ -3,8 +3,8 @@ import {EventNames} from '../../events'
 import KeysVisualizer from '../KeysVisualizer'
 import MiniClips from '../MiniClips'
 
-var Wad = require('wad')
 require('./style.sass')
+var Wad = require('wad')
 
 var rootUrl = 'https://dl.dropboxusercontent.com/u/49242076/alilditty'
 var sources = [
