@@ -14,7 +14,6 @@ export default class Icon extends React.Component {
   }
   render() {
     return <i className="icon"
-      onClick={this.props.onClick}
       onMouseEnter={this.onMouseEnter.bind(this)}
       onMouseLeave={this.onMouseLeave.bind(this)}>
     </i>
