@@ -15,6 +15,7 @@ export default class Transport extends React.Component {
     this.state = {}
 
     this.metroOn = false
+    this.recordOn = false
     this.step = 0
 
     this.startTransport()
@@ -27,6 +28,10 @@ export default class Transport extends React.Component {
         <div className="step step3"></div>
         <div className="step step4"></div>
       </div>
+      <ToggleIcon className="Record"
+        type="ion-record" size="64px"
+        color="#FFFFFF" hoverColor="#555555" onColor="#111111"
+        onToggle={this.onRecordClick.bind(this)} />
       <ToggleIcon className="Metronome"
         type="ion-ios-time-outline" size="64px"
         color="#FFFFFF" hoverColor="#555555" onColor="#111111"
@@ -54,6 +59,9 @@ export default class Transport extends React.Component {
   }
   onMetroClick(isOn, component) {
     this.metroOn = isOn
+  }
+  onRecordClick(isOn, component) {
+    this.recordOn = isOn
   }
   playMetro(step) {
     metro.play({
