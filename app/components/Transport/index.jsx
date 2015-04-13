@@ -28,7 +28,7 @@ export default class Transport extends React.Component {
         <div className="step step3"></div>
         <div className="step step4"></div>
       </div>
-      <ToggleIcon className="Record"
+      <ToggleIcon ref="Record" className="Record"
         type="ion-record" size="64px"
         color="#FFFFFF" hoverColor="#555555" onColor="#111111"
         onToggle={this.onRecordClick.bind(this)} />
@@ -38,7 +38,9 @@ export default class Transport extends React.Component {
         onToggle={this.onMetroClick.bind(this)} />
     </div>
   }
-  componentDidUpdate(prevProps, prevState) { }
+  componentDidUpdate(prevProps, prevState) {
+    this.refs.Record.setState({ on: this.props.toggles.recording })
+  }
   setActiveStyles() {
     var steps = document.querySelectorAll('.Transport .step')
     Array.prototype.slice.call(steps).forEach((step) => {

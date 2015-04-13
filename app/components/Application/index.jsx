@@ -10,6 +10,7 @@ var Mousetrap = require('mousetrap')
 var pressedKeys = {}
 
 const keyMap = {
+  'armRecord': { type: 'toggle', keys: ['space'] },
   'playNote': [
     'q', 'w', 'e', 'r', 't', 'y', 'u',
     'a', 's', 'd', 'f', 'g', 'h', 'j',
@@ -28,6 +29,9 @@ export default class Application extends React.Component {
       ],
       events: new Events(),
       selectedTrack: null,
+      toggles: {
+        recording: false,
+      },
       tracks: [
         [[], [], [], []],
         [[], [], [], []],
@@ -54,8 +58,12 @@ export default class Application extends React.Component {
   setupEvents() {
     var handlers = this.handlers()
     Object.keys(keyMap).forEach((key) => {
-      Mousetrap.bind(keyMap[key], handlers[key], 'keydown')
-      Mousetrap.bind(keyMap[key], handlers[key], 'keyup')
+      if (Array.isArray(keyMap[key])) {
+        Mousetrap.bind(keyMap[key], handlers[key], 'keydown')
+        Mousetrap.bind(keyMap[key], handlers[key], 'keyup')
+      } else {
+        Mousetrap.bind(keyMap[key].keys, handlers[key], 'keyup')
+      }
     })
 
     this.state.events.on(EventNames.STATE_SELECTED_TRACK, (index) => {
@@ -73,6 +81,11 @@ export default class Application extends React.Component {
   }
   handlers() {
     return {
+      'armRecord': (e) => {
+        var toggles = this.state.toggles
+        toggles.recording = !this.state.toggles.recording
+        this.setState({ toggles: toggles })
+      },
       'playNote': (e) => {
         if (e.type === 'keydown' && pressedKeys[e.keyCode]) { return }
         pressedKeys[e.keyCode] = e.type === 'keydown'
