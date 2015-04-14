@@ -4,6 +4,7 @@ import KeysVisualizer from '../KeysVisualizer'
 import MiniClips from '../MiniClips'
 
 require('./style.sass')
+var _ = require('lodash')
 var Wad = require('wad')
 var Tone = require('tone')
 
@@ -139,7 +140,16 @@ export default class Track extends React.Component {
     }
   }
   playClip(payload) {
-
+    _.each(payload.notes, (note) => {
+      setTimeout(() => {
+        if (note.type === 0) {
+          this.playNote(note.pitch, note.label)
+        }
+        if (note.type === 1) {
+          this.stopNote(note.pitch, note.label)
+        }
+      }, note.offset * 1000)
+    })
   }
   playNote(pitch, label) {
     var rate = (pitch / Wad.pitches.C2)
