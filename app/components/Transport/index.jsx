@@ -26,6 +26,8 @@ export default class Transport extends React.Component {
   }
   render() {
     var onColor = this.props.isRecording ? '#FF0000' : '#111111'
+    var hoverColor = this.props.selectedTrack == null ? '#FFFFFF' : '#555555'
+    onColor = this.props.selectedTrack == null ? '#FFFFFF' : onColor
 
     return <div>
       <div className="Transport">
@@ -36,7 +38,7 @@ export default class Transport extends React.Component {
       </div>
       <ToggleIcon ref="Record" className="Record"
         type="ion-record" size="64px"
-        color="#FFFFFF" hoverColor="#555555" onColor={onColor}
+        color="#FFFFFF" hoverColor={hoverColor} onColor={onColor}
         onToggle={this.onRecordClick.bind(this)} />
       <ToggleIcon ref="Metronome" className="Metronome"
         type="ion-ios-time-outline" size="64px"
@@ -111,7 +113,7 @@ export default class Transport extends React.Component {
     this.metroOn = isOn
   }
   onRecordClick(isOn, component) {
-    this.recordOn = isOn
+    this.props.events.emit(EventNames.ARM_RECORD)
   }
   playMetro(step) {
     metro.play({

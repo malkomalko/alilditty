@@ -61,6 +61,7 @@ export default class Application extends React.Component {
   }
   setupEvents() {
     var handlers = this.handlers()
+
     Object.keys(keyMap).forEach((key) => {
       if (Array.isArray(keyMap[key])) {
         Mousetrap.bind(keyMap[key], handlers[key], 'keydown')
@@ -68,6 +69,10 @@ export default class Application extends React.Component {
       } else {
         Mousetrap.bind(keyMap[key].keys, handlers[key], 'keyup')
       }
+    })
+
+    this.state.events.on(EventNames.STATE_ARM_RECORD, () => {
+      handlers.armRecord()
     })
 
     this.state.events.on(EventNames.STATE_CLIP_CHANGE, (payload) => {
@@ -78,6 +83,8 @@ export default class Application extends React.Component {
 
     this.state.events.on(EventNames.STATE_RECORD_CHANGE, (payload) => {
       var track = this.state.selectedTrack
+      if (track == null) { return }
+
       var clipSlot = this.state.activeClips[track]
       var tracks = this.state.tracks.slice()
       var state = {
@@ -95,6 +102,8 @@ export default class Application extends React.Component {
 
     this.state.events.on(EventNames.STATE_RECORD_NOTE, (payload) => {
       var track = this.state.selectedTrack
+      if (track == null) { return }
+
       var clipSlot = this.state.activeClips[track]
       var tracks = this.state.tracks.slice()
       var clip = tracks[track][clipSlot]
@@ -119,6 +128,8 @@ export default class Application extends React.Component {
         this.setState({ toggles: toggles })
       },
       'armRecord': (e) => {
+        if (this.state.selectedTrack == null) { return }
+
         var toggles = this.state.toggles
         toggles.recording = !this.state.toggles.recording
         this.setState({ toggles: toggles })
