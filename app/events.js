@@ -4,10 +4,12 @@ export const EventNames = {
   CLIP_CHANGE: 'clipChange',
   PLAY_NOTE_FOR_TRACK: 'playNoteForTrack',
   RECORD_CHANGE: 'recordChange',
+  RECORD_NOTE: 'recordNote',
   SELECTED_TRACK: 'selectedTrack',
 
   STATE_CLIP_CHANGE: 'state:clipChange',
   STATE_RECORD_CHANGE: 'state:recordChange',
+  STATE_RECORD_NOTE: 'state:recordNote',
   STATE_SELECTED_TRACK: 'state:selectedTrack',
 }
 
@@ -26,6 +28,7 @@ export class Events extends EventEmitter {
   setupEvents() {
     triggerStateEvent(this, 'CLIP_CHANGE')
     triggerStateEvent(this, 'RECORD_CHANGE')
+    triggerStateEvent(this, 'RECORD_NOTE')
     triggerStateEvent(this, 'SELECTED_TRACK')
 
     this.on(EventNames.PLAY_NOTE_FOR_TRACK, (payload) => {

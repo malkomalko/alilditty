@@ -5,6 +5,7 @@ import MiniClips from '../MiniClips'
 
 require('./style.sass')
 var Wad = require('wad')
+var Tone = require('tone')
 
 var rootUrl = 'https://dl.dropboxusercontent.com/u/49242076/alilditty'
 var sources = [
@@ -135,6 +136,9 @@ export default class Track extends React.Component {
   }
   playNote(pitch, label) {
     var rate = (pitch / Wad.pitches.C2)
+    if (this.props.isRecording) {
+      this.storeNote({ type: 0, pitch, label })
+    }
 
     sources[this.props.index].play({
       label: label,
@@ -143,7 +147,16 @@ export default class Track extends React.Component {
     })
   }
   stopNote(pitch, label) {
+    if (this.props.isRecording) {
+      this.storeNote({ type: 0, pitch, label })
+    }
     sources[this.props.index].stop(label)
+  }
+  storeNote(payload) {
+    var now = Tone.context.currentTime
+    var offset = now - this.props.recordingStartTime
+    payload.offset = offset
+    this.props.events.emit(EventNames.RECORD_NOTE, payload)
   }
   stopAllNotes(index) {
     noteNames.forEach((label) => {

@@ -30,6 +30,7 @@ export default class Application extends React.Component {
       ],
       events: new Events(),
       isRecording: false,
+      recordingStartTime: 0,
       selectedTrack: null,
       toggles: {
         metro: false,
@@ -76,7 +77,14 @@ export default class Application extends React.Component {
     })
 
     this.state.events.on(EventNames.STATE_RECORD_CHANGE, (payload) => {
-      this.setState({ isRecording: payload.state === 'on' })
+      this.setState({
+        isRecording: payload.state === 'on',
+        recordingStartTime: payload.time,
+      })
+    })
+
+    this.state.events.on(EventNames.STATE_RECORD_NOTE, (payload) => {
+      console.log(payload)
     })
 
     this.state.events.on(EventNames.STATE_SELECTED_TRACK, (index) => {
