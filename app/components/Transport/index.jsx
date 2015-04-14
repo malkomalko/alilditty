@@ -3,6 +3,7 @@ import {Events, EventNames} from '../../events'
 import ToggleIcon from '../ToggleIcon'
 
 require('./style.sass')
+var _ = require('lodash')
 var Tone = require('tone')
 var Wad = require('wad')
 
@@ -19,6 +20,7 @@ export default class Transport extends React.Component {
     this.recording = false
     this.recordOn = false
     this.step = 0
+    this.totalMeasures = [0, 0, 0, 0, 0, 0, 0, 0]
 
     this.startTransport()
   }
@@ -83,6 +85,27 @@ export default class Transport extends React.Component {
       })
       this.recordedMeasures = 0
     }
+    this.playClips()
+  }
+  playClips() {
+    _.each(this.clipsToTrigger(), (clip) => {
+      console.log('queue events from clip', clip)
+    })
+  }
+  clipsToTrigger() {
+    var clipSlots = _.map(this.props.activeClips, (clipSlot, index) => {
+      return this.props.tracks[index][clipSlot]
+    })
+    this.totalMeasures = _.map(this.totalMeasures, (measures, track) => {
+      measures -= 1
+      if (measures <= 0) {
+        measures = clipSlots[track].measures || 0
+      }
+      return measures
+    })
+    return _.filter(clipSlots, (clipSlot, index) => {
+      return this.totalMeasures[index] === clipSlot.measures
+    })
   }
   onMetroClick(isOn, component) {
     this.metroOn = isOn
