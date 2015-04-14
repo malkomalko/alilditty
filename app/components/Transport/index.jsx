@@ -15,12 +15,15 @@ export default class Transport extends React.Component {
     this.state = {}
 
     this.metroOn = false
+    this.recording = false
     this.recordOn = false
     this.step = 0
 
     this.startTransport()
   }
   render() {
+    var onColor = this.props.isRecording ? '#FF0000' : '#111111'
+
     return <div>
       <div className="Transport">
         <div className="step step1"></div>
@@ -30,7 +33,7 @@ export default class Transport extends React.Component {
       </div>
       <ToggleIcon ref="Record" className="Record"
         type="ion-record" size="64px"
-        color="#FFFFFF" hoverColor="#555555" onColor="#111111"
+        color="#FFFFFF" hoverColor="#555555" onColor={onColor}
         onToggle={this.onRecordClick.bind(this)} />
       <ToggleIcon ref="Metronome" className="Metronome"
         type="ion-ios-time-outline" size="64px"
@@ -54,6 +57,9 @@ export default class Transport extends React.Component {
   startTransport() {
     Tone.Transport.setInterval((time) => {
       this.step = ((this.step + 1) % 4)
+      if (this.step === 0) {
+        this.onMeasure(time)
+      }
       this.setActiveStyles()
       if (this.metroOn) {
         this.playMetro(this.step)
@@ -61,6 +67,19 @@ export default class Transport extends React.Component {
     }, '4n')
 
     Tone.Transport.start()
+  }
+  onMeasure(time) {
+    if (this.recordOn && !this.recording) {
+      this.recording = true
+      this.props.events.emit(EventNames.RECORD_CHANGE, {
+        state: 'on', time,
+      })
+    } else if (!this.recordOn && this.recording) {
+      this.recording = false
+      this.props.events.emit(EventNames.RECORD_CHANGE, {
+        state: 'off', time,
+      })
+    }
   }
   onMetroClick(isOn, component) {
     this.metroOn = isOn

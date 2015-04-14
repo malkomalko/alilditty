@@ -21,6 +21,7 @@ export default class ToggleIcon extends React.Component {
   componentWillMount() { }
   componentDidMount() {
     this.el = React.findDOMNode(this)
+    this.icon = this.el.getElementsByClassName('icon')[0]
   }
   componentWillReceiveProps(nextProps) { }
   componentDidUpdate(prevProps, prevState) {
@@ -35,11 +36,10 @@ export default class ToggleIcon extends React.Component {
     }
   }
   setupStyles() {
-    var icon = this.el.getElementsByClassName('icon')[0]
     if (this.state.on && this.props.onColor) {
-      icon.style.color = this.props.onColor
+      this.icon.style.color = this.props.onColor
     } else {
-      icon.style.color = this.props.color
+      this.icon.style.color = this.props.color
     }
   }
 }
