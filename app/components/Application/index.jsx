@@ -84,7 +84,11 @@ export default class Application extends React.Component {
     })
 
     this.state.events.on(EventNames.STATE_RECORD_NOTE, (payload) => {
-      console.log(payload)
+      var track = this.state.selectedTrack
+      var clipSlot = this.state.activeClips[track]
+      var tracks = this.state.tracks.slice()
+      tracks[track][clipSlot].push(payload)
+      this.setState({ tracks })
     })
 
     this.state.events.on(EventNames.STATE_SELECTED_TRACK, (index) => {

@@ -148,7 +148,7 @@ export default class Track extends React.Component {
   }
   stopNote(pitch, label) {
     if (this.props.isRecording) {
-      this.storeNote({ type: 0, pitch, label })
+      this.storeNote({ type: 1, pitch, label })
     }
     sources[this.props.index].stop(label)
   }
