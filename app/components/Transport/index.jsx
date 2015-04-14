@@ -15,6 +15,7 @@ export default class Transport extends React.Component {
     this.state = {}
 
     this.metroOn = false
+    this.recordedMeasures = 0
     this.recording = false
     this.recordOn = false
     this.step = 0
@@ -69,6 +70,7 @@ export default class Transport extends React.Component {
     Tone.Transport.start()
   }
   onMeasure(time) {
+    if (this.recording) { this.recordedMeasures += 1 }
     if (this.recordOn && !this.recording) {
       this.recording = true
       this.props.events.emit(EventNames.RECORD_CHANGE, {
@@ -77,8 +79,9 @@ export default class Transport extends React.Component {
     } else if (!this.recordOn && this.recording) {
       this.recording = false
       this.props.events.emit(EventNames.RECORD_CHANGE, {
-        state: 'off', time,
+        state: 'off', time, measures: this.recordedMeasures,
       })
+      this.recordedMeasures = 0
     }
   }
   onMetroClick(isOn, component) {

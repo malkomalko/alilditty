@@ -37,14 +37,14 @@ export default class Application extends React.Component {
         recording: false,
       },
       tracks: [
-        [[], [], [], []],
-        [[], [], [], []],
-        [[], [], [], []],
-        [[], [], [], []],
-        [[], [], [], []],
-        [[], [], [], []],
-        [[], [], [], []],
-        [[], [], [], []],
+        [{}, {}, {}, {}],
+        [{}, {}, {}, {}],
+        [{}, {}, {}, {}],
+        [{}, {}, {}, {}],
+        [{}, {}, {}, {}],
+        [{}, {}, {}, {}],
+        [{}, {}, {}, {}],
+        [{}, {}, {}, {}],
       ],
     }
 
@@ -77,17 +77,30 @@ export default class Application extends React.Component {
     })
 
     this.state.events.on(EventNames.STATE_RECORD_CHANGE, (payload) => {
-      this.setState({
+      var track = this.state.selectedTrack
+      var clipSlot = this.state.activeClips[track]
+      var tracks = this.state.tracks.slice()
+      var state = {
         isRecording: payload.state === 'on',
-        recordingStartTime: payload.time,
-      })
+      }
+      if (state.isRecording) {
+        state.recordingStartTime = payload.time
+        tracks[track][clipSlot] = {}
+        state.tracks = tracks
+      } else {
+        tracks[track][clipSlot].measures = payload.measures
+      }
+      this.setState(state)
     })
 
     this.state.events.on(EventNames.STATE_RECORD_NOTE, (payload) => {
       var track = this.state.selectedTrack
       var clipSlot = this.state.activeClips[track]
       var tracks = this.state.tracks.slice()
-      tracks[track][clipSlot].push(payload)
+      var clip = tracks[track][clipSlot]
+      clip.notes = clip.notes || []
+      clip.notes.push(payload)
+
       this.setState({ tracks })
     })
 
