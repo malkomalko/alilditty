@@ -106,6 +106,10 @@ export default class Track extends React.Component {
       this.playOrStopNote(payload)
     })
 
+    this.props.events.on(`track:${index}:playClip`, (payload) => {
+      this.playClip(payload)
+    })
+
     this.props.events.on(EventNames.STATE_SELECTED_TRACK, (index) => {
       this.stopAllNotes(this.props.index)
     })
@@ -133,6 +137,9 @@ export default class Track extends React.Component {
     } else {
       this.stopNote(pitch, label)
     }
+  }
+  playClip(payload) {
+
   }
   playNote(pitch, label) {
     var rate = (pitch / Wad.pitches.C2)

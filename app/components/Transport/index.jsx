@@ -91,12 +91,14 @@ export default class Transport extends React.Component {
   }
   playClips() {
     _.each(this.clipsToTrigger(), (clip) => {
-      console.log('queue events from clip', clip)
+      this.props.events.emit(EventNames.PLAY_CLIP_FOR_TRACK, clip)
     })
   }
   clipsToTrigger() {
     var clipSlots = _.map(this.props.activeClips, (clipSlot, index) => {
-      return this.props.tracks[index][clipSlot]
+      var clipSlot = this.props.tracks[index][clipSlot]
+      clipSlot.index = index
+      return clipSlot
     })
     this.totalMeasures = _.map(this.totalMeasures, (measures, track) => {
       measures -= 1
