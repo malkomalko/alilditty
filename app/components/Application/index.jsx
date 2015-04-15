@@ -17,7 +17,10 @@ const keyMap = {
     'a', 's', 'd', 'f', 'g', 'h', 'j',
     'z', 'x', 'c', 'v', 'b', 'n', 'm',
   ],
-  'selectTrack': ['1', '2', '3', '4', '5', '6', '7', '8'],
+  'selectTrack': {
+    type: 'toggle',
+    keys: ['1', '2', '3', '4', '5', '6', '7', '8'],
+  },
 }
 
 export default class Application extends React.Component {
@@ -143,16 +146,11 @@ export default class Application extends React.Component {
         })
       },
       'selectTrack': (e) => {
-        if (e.type === 'keydown' && pressedKeys[e.keyCode]) { return }
-        pressedKeys[e.keyCode] = e.type === 'keydown'
-        if (e.type === 'keyup') { return }
-
         var trackNumber = e.keyCode - 49
         if (this.state.selectedTrack === trackNumber) {
           trackNumber = null
         }
         this.setState({ selectedTrack: trackNumber })
-        this.state.events.emit(EventNames.STATE_SELECTED_TRACK, trackNumber)
       },
     }
   }

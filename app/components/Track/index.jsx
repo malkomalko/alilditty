@@ -111,10 +111,6 @@ export default class Track extends React.Component {
     this.props.events.on(`track:${index}:playClip`, (payload) => {
       this.playClip(payload)
     })
-
-    this.props.events.on(EventNames.STATE_SELECTED_TRACK, (index) => {
-      this.stopAllNotes(this.props.index)
-    })
   }
   onClick(e) {
     var index = this.props.index
