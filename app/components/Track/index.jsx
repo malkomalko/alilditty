@@ -141,6 +141,9 @@ export default class Track extends React.Component {
     }
   }
   playClip(payload) {
+    this.allNotesOff()
+    this.playStartingNotes(payload.notes)
+
     _.each(payload.notes, (note) => {
       var bpm = Tone.Transport.bpm.value
       var offset = note.offset * (60 / bpm * 4)
@@ -152,6 +155,26 @@ export default class Track extends React.Component {
           this.stopNote(note.pitch, note.label, true)
         }
       }, offset * 1000)
+    })
+  }
+  allNotesOff() {
+    _.each(noteNames, (noteName) => {
+      sources[this.props.index].stop(noteName)
+    })
+  }
+  playStartingNotes(notes) {
+    var noteOns = {}
+    _.each(notes, (note) => {
+      if (note.type === 0) {
+        noteOns[note.label] = true
+      }
+      if (note.type === 1) {
+        if (noteOns[note.label]) {
+          noteOns[note.label] = false
+        } else {
+          this.playNote(note.pitch, note.label, true)
+        }
+      }
     })
   }
   playNote(pitch, label, fromClip = false) {
