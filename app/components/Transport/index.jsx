@@ -1,6 +1,7 @@
 import React from 'react'
 import {Events, EventNames} from '../../events'
 import Icon from '../Icon'
+import Modal from '../Modal'
 import ToggleIcon from '../ToggleIcon'
 
 require('./style.sass')
@@ -14,7 +15,9 @@ export default class Transport extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      isModalOpen: false,
+    }
 
     this.metroOn = false
     this.recordedMeasures = 0
@@ -49,6 +52,13 @@ export default class Transport extends React.Component {
         type="ion-ios-time-outline" size="64px"
         color="#FFFFFF" hoverColor="#555555" onColor="#111111"
         onToggle={this.onMetroClick.bind(this)} />
+      <Modal isOpen={this.state.isModalOpen}
+        transitionName="modal-anim">
+        <Icon className="Close"
+          type="ion-ios-close" size="64px"
+          color="#FFFFFF" hoverColor="#F58E99"
+          onClick={this.onCloseModalClick.bind(this)} />
+      </Modal>
     </div>
   }
   componentDidUpdate(prevProps, prevState) {
@@ -117,11 +127,14 @@ export default class Transport extends React.Component {
       return this.totalMeasures[index] === clipSlot.measures
     })
   }
+  onCloseModalClick(e) {
+    this.setState({ isModalOpen: false })
+  }
   onMetroClick(isOn, component) {
     this.metroOn = isOn
   }
   onMixerClick(e) {
-    console.log('onMixerClick')
+    this.setState({ isModalOpen: true })
   }
   onRecordClick(isOn, component) {
     this.props.events.emit(EventNames.ARM_RECORD)
