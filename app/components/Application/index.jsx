@@ -30,7 +30,6 @@ export default class Application extends React.Component {
       ],
       events: new Events(),
       isRecording: false,
-      recordingStartTime: 0,
       selectedTrack: null,
       toggles: {
         metro: false,
@@ -91,7 +90,6 @@ export default class Application extends React.Component {
         isRecording: payload.state === 'on',
       }
       if (state.isRecording) {
-        state.recordingStartTime = payload.time
         tracks[track][clipSlot] = {}
         state.tracks = tracks
       } else {

@@ -76,6 +76,7 @@ export default class Transport extends React.Component {
   onMeasure(time) {
     if (this.recording) { this.recordedMeasures += 1 }
     if (this.recordOn && !this.recording) {
+      window.recordingStartTime = Tone.context.currentTime
       this.recording = true
       this.props.events.emit(EventNames.RECORD_CHANGE, {
         state: 'on', time,

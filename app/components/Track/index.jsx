@@ -4,6 +4,7 @@ import KeysVisualizer from '../KeysVisualizer'
 import MiniClips from '../MiniClips'
 
 require('./style.sass')
+var mathUtils = require('../../utilities/math')
 var _ = require('lodash')
 var Wad = require('wad')
 var Tone = require('tone')
@@ -141,19 +142,21 @@ export default class Track extends React.Component {
   }
   playClip(payload) {
     _.each(payload.notes, (note) => {
+      var bpm = Tone.Transport.bpm.value
+      var offset = note.offset * (60 / bpm * 4)
       setTimeout(() => {
         if (note.type === 0) {
-          this.playNote(note.pitch, note.label)
+          this.playNote(note.pitch, note.label, true)
         }
         if (note.type === 1) {
-          this.stopNote(note.pitch, note.label)
+          this.stopNote(note.pitch, note.label, true)
         }
-      }, note.offset * 1000)
+      }, offset * 1000)
     })
   }
-  playNote(pitch, label) {
+  playNote(pitch, label, fromClip = false) {
     var rate = (pitch / Wad.pitches.C2)
-    if (this.props.isRecording) {
+    if (this.props.isRecording && !fromClip) {
       this.storeNote({ type: 0, pitch, label })
     }
 
@@ -163,15 +166,17 @@ export default class Track extends React.Component {
       env: { hold: 15, release: 0.4 },
     })
   }
-  stopNote(pitch, label) {
-    if (this.props.isRecording) {
+  stopNote(pitch, label, fromClip = false) {
+    if (this.props.isRecording && !fromClip) {
       this.storeNote({ type: 1, pitch, label })
     }
     sources[this.props.index].stop(label)
   }
   storeNote(payload) {
     var now = Tone.context.currentTime
-    var offset = now - this.props.recordingStartTime
+    var offset = now - window.recordingStartTime
+    var bpm = Tone.Transport.bpm.value
+    offset = mathUtils.roundToNearest((offset * (bpm / 60)) / 4, 1 / 16)
     payload.offset = offset
     this.props.events.emit(EventNames.RECORD_NOTE, payload)
   }
