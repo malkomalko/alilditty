@@ -1,5 +1,6 @@
 import React from 'react'
 import {Events, EventNames} from '../../events'
+import Icon from '../Icon'
 import ToggleIcon from '../ToggleIcon'
 
 require('./style.sass')
@@ -36,6 +37,10 @@ export default class Transport extends React.Component {
         <div className="step step3"></div>
         <div className="step step4"></div>
       </div>
+      <Icon ref="Mixer" className="Mixer"
+        type="ion-levels" size="64px"
+        color="#FFFFFF" hoverColor="#555555"
+        onClick={this.onMixerClick.bind(this)} />
       <ToggleIcon ref="Record" className="Record"
         type="ion-record" size="64px"
         color="#FFFFFF" hoverColor={hoverColor} onColor={onColor}
@@ -114,6 +119,9 @@ export default class Transport extends React.Component {
   }
   onMetroClick(isOn, component) {
     this.metroOn = isOn
+  }
+  onMixerClick(e) {
+    console.log('onMixerClick')
   }
   onRecordClick(isOn, component) {
     this.props.events.emit(EventNames.ARM_RECORD)
