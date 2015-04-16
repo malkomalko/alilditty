@@ -1,5 +1,6 @@
 import React from 'react'
 import {Events, EventNames} from '../../events'
+import ClipSequencer from '../ClipSequencer'
 import Icon from '../Icon'
 import Mixer from '../Mixer'
 import Modal from '../Modal'
@@ -72,6 +73,7 @@ export default class Transport extends React.Component {
           type="ion-ios-close" size="64px"
           color="#FFFFFF" hoverColor="#F58E99"
           onClick={this.onCloseModalClick.bind(this, 'isSequenceOpen')} />
+        <ClipSequencer {...this.props} />
       </Modal>
     </div>
   }
