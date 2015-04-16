@@ -13,12 +13,12 @@ var rootUrl = 'https://dl.dropboxusercontent.com/u/49242076/alilditty'
 var sources = [
   new Wad({ source: `${rootUrl}/piano.mp3` }),
   new Wad({ source: `${rootUrl}/guitarverb.mp3` }),
-  new Wad({ source: `${rootUrl}/guitartremolo.mp3` }),
+  new Wad({ source: `${rootUrl}/acoustic.mp3` }),
   new Wad({ source: `${rootUrl}/electricbass.mp3` }),
-  new Wad({ source: `${rootUrl}/piano.mp3` }),
-  new Wad({ source: `${rootUrl}/guitarverb.mp3` }),
-  new Wad({ source: `${rootUrl}/guitartremolo.mp3` }),
-  new Wad({ source: `${rootUrl}/electricbass.mp3` }),
+  new Wad({ source: `${rootUrl}/anotherworld.mp3` }),
+  new Wad({ source: `${rootUrl}/cutglass.mp3` }),
+  new Wad({ source: `${rootUrl}/insects.mp3` }),
+  new Wad({ source: `${rootUrl}/hardnuts.mp3` }),
 ]
 
 var keyCodes = [
