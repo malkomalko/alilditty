@@ -29,13 +29,16 @@
       &:last-child
         margin-bottom: 10px
 
+      .trackBackground
+        float: left
+        height: calc(100% - 10px)
+        margin: 5px 0 5px 5px
+        width: calc(10% - 5px)
+
       p.trackNumber
         @extend %vertical-align
-        float: left
         font-size: 22px
-        margin: 0 0 0 20px
         text-align: center
-        width: calc(10% - 20px)
 
       .TriggerMiniClips
         background: rgba(0,0,0,0.20)

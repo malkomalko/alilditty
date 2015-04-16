@@ -5,6 +5,11 @@ import MiniClips from '../MiniClips'
 require('./style.sass')
 var _ = require('lodash')
 
+var gridColors = [
+  '#F58E99', '#6AC6D6', '#FFEE81', '#FCC886',
+  '#88CCAC', '#A3A3C8', '#6AA7CE', '#A09C97',
+]
+
 export default class ClipSequencer extends React.Component {
   constructor(props) {
     super(props)
@@ -41,7 +46,10 @@ export default class ClipSequencer extends React.Component {
       return <div className="Trigger"
         ref={"trigger-" + index}
         key={"trigger-" + index}>
-        <p className="trackNumber">{index + 1}</p>
+        <div className="trackBackground"
+          style={this.pStyles.call(this, index)}>
+          <p className="trackNumber">{index + 1}</p>
+        </div>
         <MiniClips {...this.props} className={"TriggerMiniClips c" + index}
           selectedTrack={index} onClick={this.onClick.bind(this, index)}
           activeClips={this.props.sequenceActiveClips}/>
@@ -49,6 +57,11 @@ export default class ClipSequencer extends React.Component {
     })
   }
   sequences() {
+  }
+  pStyles(index) {
+    return {
+      backgroundColor: gridColors[index],
+    }
   }
   onClick(index, clip, e) {
     this.props.events.emit(EventNames.SEQUENCE_CLIP_CHANGE, {
