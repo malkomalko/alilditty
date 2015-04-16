@@ -33,33 +33,36 @@ export default class Mixer extends React.Component {
 
   }
   onMouseDown(index, e) {
-    e.persist()
+    // e.persist() <-- used to be able to log e
     this.mouseState[index] = true
+    this.changeSlider(index, e)
   }
   onMouseLeave(index, e) {
     this.mouseState[index] = false
   }
   onMouseMove(index, e) {
     if (this.mouseState[index]) {
-      e.persist()
-
-      var el;
-      if (e.target.className === 'MixerStrip') {
-        el = e.target
-      } else {
-        el = e.target.parentElement
-      }
-
-      var rect = el.getBoundingClientRect()
-      var base = ~~(rect.height) + ~~(rect.top) - e.clientY
-      var percent = Math.round(base / ~~(rect.height) * 100) + '%'
-
-      el.getElementsByClassName('MixerStripHandle')[0].style.height = percent
+      this.changeSlider(index, e)
     }
   }
   onMouseUp(index, e) {
-    e.persist()
     this.mouseState[index] = false
+  }
+  changeSlider(index, e) {
+    var el;
+    if (e.target.className === 'MixerStrip') {
+      el = e.target
+    } else {
+      el = e.target.parentElement
+    }
+
+    var rect = el.getBoundingClientRect()
+    var base = ~~(rect.height) + ~~(rect.top) - e.clientY
+    var percent = Math.round(base / ~~(rect.height) * 100) + '%'
+
+    el.getElementsByClassName('MixerStripHandle')[0].style.height = percent
+    var payload = { index, percent }
+    this.props.events.emit(EventNames.MIXER_LEVEL_CHANGE_FOR_TRACK, payload)
   }
   componentDidMount() {
     // called once after initial render => React.findDOMNode(this)

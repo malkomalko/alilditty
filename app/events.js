@@ -4,6 +4,7 @@ export const EventNames = {
   ARM_RECORD: 'armRecord',
   CLIP_CHANGE: 'clipChange',
   METRO_CHANGE: 'metroChange',
+  MIXER_LEVEL_CHANGE_FOR_TRACK: 'mixerLevelChangeForTrack',
   PLAY_CLIP_FOR_TRACK: 'playClipForTrack',
   PLAY_NOTE_FOR_TRACK: 'playNoteForTrack',
   RECORD_CHANGE: 'recordChange',
@@ -38,12 +39,16 @@ export class Events extends EventEmitter {
     triggerStateEvent(this, 'RECORD_NOTE')
     triggerStateEvent(this, 'SELECTED_TRACK')
 
-    this.on(EventNames.PLAY_NOTE_FOR_TRACK, (payload) => {
-      this.emit(`track:${payload.index}:playNote`, payload)
-    })
-
     this.on(EventNames.PLAY_CLIP_FOR_TRACK, (payload) => {
       this.emit(`track:${payload.index}:playClip`, payload)
+    })
+
+    this.on(EventNames.MIXER_LEVEL_CHANGE_FOR_TRACK, (payload) => {
+      this.emit(`track:${payload.index}:levelChange`, payload)
+    })
+
+    this.on(EventNames.PLAY_NOTE_FOR_TRACK, (payload) => {
+      this.emit(`track:${payload.index}:playNote`, payload)
     })
   }
 }
