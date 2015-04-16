@@ -1,10 +1,31 @@
 @import ../../css/mixins.sass
 
 .Mixer
-  background-color: #6AC6D6
+  background-color: #A09C97
   border-radius: 4px
   height: calc(100% - 120px)
   margin: 100px 20px 20px 20px
   opacity: 0.9
   transition: all 0.3s ease-in-out
   width: calc(100% - 40px)
+
+.MixerStrip
+  background-color: #FFFFFF
+  border-radius: 4px
+  float: left
+  height: calc(100% - 40px)
+  margin: 20px 0 20px 20px
+  position: relative
+  transition: all 0.3s ease-in-out
+  width: calc((100% - 180px) / 8)
+
+  &:last-child
+    margin-right: 20px
+
+  .MixerStripHandle
+    background-color: #FFEE81
+    border-radius: 4px
+    bottom: 0
+    height: 80%
+    position: absolute
+    width: 100%
