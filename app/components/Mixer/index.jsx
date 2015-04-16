@@ -20,7 +20,9 @@ export default class Mixer extends React.Component {
   }
   mixerStrips() {
     return _.map(this.props.tracks, (track, index) => {
-      return <div className="MixerStrip" key={"mixerStrip-" + index}
+      return <div className="MixerStrip"
+        ref={"mixerStrip-" + index}
+        key={"mixerStrip-" + index}
         onMouseDown={this.onMouseDown.bind(this, index)}
         onMouseLeave={this.onMouseLeave.bind(this, index)}
         onMouseMove={this.onMouseMove.bind(this, index)}
@@ -62,18 +64,27 @@ export default class Mixer extends React.Component {
 
     el.getElementsByClassName('MixerStripHandle')[0].style.height = percent
     var payload = { index, percent }
-    this.props.events.emit(EventNames.MIXER_LEVEL_CHANGE_FOR_TRACK, payload)
+    this.props.events.emit(EventNames.MIXER_LEVEL_CHANGE, payload)
   }
   componentDidMount() {
     // called once after initial render => React.findDOMNode(this)
+    this.setupUi()
   }
   componentWillReceiveProps(nextProps) {
     // use to set state before a render when props change
+    this.setupUi(nextProps)
   }
   componentDidUpdate(prevProps, prevState) {
     // make dom updates
   }
   componentWillUnmount() {
     // clean up events
+  }
+  setupUi(props = this.props) {
+    Object.keys(this.refs).forEach((key, index) => {
+      var el = this.refs[key].getDOMNode()
+      var percent = props.mixer.levels[index]
+      el.getElementsByClassName('MixerStripHandle')[0].style.height = percent
+    })
   }
 }

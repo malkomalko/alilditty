@@ -27,12 +27,17 @@ export default class Application extends React.Component {
   constructor(props) {
     super(props)
 
+    var sl = '75%'
+
     this.state = {
       activeClips: [
         0, 0, 0, 0, 0, 0, 0, 0,
       ],
       events: new Events(),
       isRecording: false,
+      mixer: {
+        levels: [sl, sl, sl, sl, sl, sl, sl, sl],
+      },
       selectedTrack: null,
       toggles: {
         metro: false,
@@ -85,6 +90,12 @@ export default class Application extends React.Component {
 
     this.state.events.on(EventNames.STATE_METRO_CHANGE, (payload) => {
       handlers.armMetro()
+    })
+
+    this.state.events.on(EventNames.STATE_MIXER_LEVEL_CHANGE, (payload) => {
+      var mixer = this.state.mixer
+      mixer.levels[payload.index] = payload.percent
+      this.setState({ mixer })
     })
 
     this.state.events.on(EventNames.STATE_RECORD_CHANGE, (payload) => {

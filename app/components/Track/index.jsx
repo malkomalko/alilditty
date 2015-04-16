@@ -79,9 +79,6 @@ export default class Track extends React.Component {
     super(props)
 
     sources[this.props.index].play({ env: { hold: 0 }})
-
-    this.audioLevel = 0.80
-
     this.setupEvents()
   }
   render() {
@@ -109,10 +106,6 @@ export default class Track extends React.Component {
 
     this.props.events.on(`track:${index}:playNote`, (payload) => {
       this.playOrStopNote(payload)
-    })
-
-    this.props.events.on(`track:${index}:levelChange`, (payload) => {
-      this.audioLevel = parseFloat(payload.percent) / 100
     })
 
     this.props.events.on(`track:${index}:playClip`, (payload) => {
@@ -188,10 +181,13 @@ export default class Track extends React.Component {
 
     sources[this.props.index].play({
       label: label,
+      volume: this.volumeFor(this.props.index),
       rate: rate,
-      volume: this.audioLevel,
       env: { hold: 15, release: 0.4 },
     })
+  }
+  volumeFor(index) {
+    return parseFloat(this.props.mixer.levels[index]) / 100
   }
   stopNote(pitch, label, fromClip = false) {
     if (this.props.isRecording && !fromClip) {
