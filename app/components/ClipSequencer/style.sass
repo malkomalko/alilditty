@@ -19,6 +19,40 @@
     transition: all 0.3s ease-in-out
     width: calc(70% - 40px)
 
+    .Trigger
+      background-color: #FFFFFF
+      height: calc((100% - 90px) / 8)
+      margin: 10px
+      position: relative
+      width: calc(100% - 20px)
+
+      &:last-child
+        margin-bottom: 10px
+
+      p.trackNumber
+        @extend %vertical-align
+        float: left
+        font-size: 22px
+        margin: 0 0 0 20px
+        text-align: center
+        width: calc(10% - 20px)
+
+      .TriggerMiniClips
+        background: rgba(0,0,0,0.20)
+        float: left
+        height: calc(100% - 10px)
+        margin: 5px
+        width: calc(90% - 10px)
+
+        .clip
+          background: rgba(215,215,215,0.50)
+          border: 1px solid black
+          float: left
+          height: 100%
+          width: 25%
+          &.active
+            background: rgba(255,255,255,1)
+
   .sequences
     background-color: #6AC6D6
     border-radius: 4px

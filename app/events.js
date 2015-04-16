@@ -11,6 +11,7 @@ export const EventNames = {
   RECORD_CHANGE: 'recordChange',
   RECORD_NOTE: 'recordNote',
   SELECTED_TRACK: 'selectedTrack',
+  SEQUENCE_CLIP_CHANGE: 'sequenceClipChange',
 
   STATE_ARM_RECORD: 'state:armRecord',
   STATE_CLIP_CHANGE: 'state:clipChange',
@@ -19,6 +20,7 @@ export const EventNames = {
   STATE_RECORD_CHANGE: 'state:recordChange',
   STATE_RECORD_NOTE: 'state:recordNote',
   STATE_SELECTED_TRACK: 'state:selectedTrack',
+  STATE_SEQUENCE_CLIP_CHANGE: 'state:sequenceClipChange',
 }
 
 function triggerStateEvent(self, event) {
@@ -41,6 +43,7 @@ export class Events extends EventEmitter {
     triggerStateEvent(this, 'RECORD_CHANGE')
     triggerStateEvent(this, 'RECORD_NOTE')
     triggerStateEvent(this, 'SELECTED_TRACK')
+    triggerStateEvent(this, 'SEQUENCE_CLIP_CHANGE')
 
     this.on(EventNames.PLAY_CLIP_FOR_TRACK, (payload) => {
       this.emit(`track:${payload.index}:playClip`, payload)

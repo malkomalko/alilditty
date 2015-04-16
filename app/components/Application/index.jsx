@@ -39,6 +39,9 @@ export default class Application extends React.Component {
         levels: [sl, sl, sl, sl, sl, sl, sl, sl],
       },
       selectedTrack: null,
+      sequenceActiveClips: [
+        0, 0, 0, 0, 0, 0, 0, 0,
+      ],
       toggles: {
         metro: false,
         recording: false,
@@ -132,6 +135,13 @@ export default class Application extends React.Component {
     this.state.events.on(EventNames.STATE_SELECTED_TRACK, (index) => {
       this.setState({ selectedTrack: index })
     })
+
+    this.state.events.on(EventNames.STATE_SEQUENCE_CLIP_CHANGE, (payload) => {
+      var clips = this.state.sequenceActiveClips.slice()
+      clips[payload.track] = payload.clip
+      this.setState({ sequenceActiveClips: clips })
+    })
+
   }
   onWheel(e) {
     e.preventDefault()

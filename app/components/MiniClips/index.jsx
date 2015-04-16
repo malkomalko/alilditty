@@ -10,7 +10,8 @@ export default class MiniClips extends React.Component {
     this.setupEvents()
   }
   render() {
-    return <div className="MiniClips">
+    this.className = this.props.className || "MiniClips"
+    return <div className={this.className}>
       <div className="clip clip1" onClick={this.onClick.bind(this, 0)}></div>
       <div className="clip clip2" onClick={this.onClick.bind(this, 1)}></div>
       <div className="clip clip3" onClick={this.onClick.bind(this, 2)}></div>
@@ -35,17 +36,22 @@ export default class MiniClips extends React.Component {
     // clean up events
   }
   onClick(clip, e) {
-    var track = this.props.selectedTrack
-    this.props.events.emit(EventNames.CLIP_CHANGE, {
-      clip, track,
-    })
-    e.stopPropagation()
+    if (this.props.onClick) {
+      this.props.onClick(clip, e)
+    } else {
+      var track = this.props.selectedTrack
+      this.props.events.emit(EventNames.CLIP_CHANGE, {
+        clip, track,
+      })
+      e.stopPropagation()
+    }
   }
   setActiveStyles(props) {
     props = props || this.props
     var selectedTrack = props.selectedTrack
     var selectedClip = props.activeClips[selectedTrack]
-    var clips = document.querySelectorAll('.MiniClips .clip')
+    var className = this.className.split(' ').join('.')
+    var clips = document.querySelectorAll(`.${className} .clip`)
     Array.prototype.slice.call(clips).forEach((clip) => {
       clip.classList.remove('active')
     })
