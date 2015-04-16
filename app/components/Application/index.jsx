@@ -27,7 +27,7 @@ export default class Application extends React.Component {
   constructor(props) {
     super(props)
 
-    var sl = '75%'
+    var sl = '70%'
 
     this.state = {
       activeClips: [
