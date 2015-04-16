@@ -100,7 +100,8 @@ export default class ClipSequencer extends React.Component {
     e.stopPropagation()
   }
   playSequence(sequence, e) {
-    console.log(sequence)
+    this.props.events.emit(EventNames.PLAY_SEQUENCE, sequence)
+    e.stopPropagation()
   }
   onClick(index, clip, e) {
     this.props.events.emit(EventNames.SEQUENCE_CLIP_CHANGE, {

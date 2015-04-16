@@ -108,6 +108,12 @@ export default class Application extends React.Component {
       this.setState({ mixer })
     })
 
+    this.state.events.on(EventNames.STATE_PLAY_SEQUENCE, (payload) => {
+      var activeClips = this.state.activeClips.slice()
+      activeClips = payload
+      this.setState({ activeClips })
+    })
+
     this.state.events.on(EventNames.STATE_RECORD_CHANGE, (payload) => {
       var track = this.state.selectedTrack
       if (track == null) { return }

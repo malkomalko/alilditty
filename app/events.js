@@ -9,6 +9,7 @@ export const EventNames = {
   MIXER_LEVEL_CHANGE_FOR_TRACK: 'mixerLevelChangeForTrack',
   PLAY_CLIP_FOR_TRACK: 'playClipForTrack',
   PLAY_NOTE_FOR_TRACK: 'playNoteForTrack',
+  PLAY_SEQUENCE: 'playSequence',
   RECORD_CHANGE: 'recordChange',
   RECORD_NOTE: 'recordNote',
   SELECTED_TRACK: 'selectedTrack',
@@ -19,6 +20,7 @@ export const EventNames = {
   STATE_CLIP_CHANGE: 'state:clipChange',
   STATE_METRO_CHANGE: 'state:metroChange',
   STATE_MIXER_LEVEL_CHANGE: 'state:mixerLevelChange',
+  STATE_PLAY_SEQUENCE: 'state:playSequence',
   STATE_RECORD_CHANGE: 'state:recordChange',
   STATE_RECORD_NOTE: 'state:recordNote',
   STATE_SELECTED_TRACK: 'state:selectedTrack',
@@ -43,6 +45,7 @@ export class Events extends EventEmitter {
     triggerStateEvent(this, 'CLIP_CHANGE')
     triggerStateEvent(this, 'METRO_CHANGE')
     triggerStateEvent(this, 'MIXER_LEVEL_CHANGE')
+    triggerStateEvent(this, 'PLAY_SEQUENCE')
     triggerStateEvent(this, 'RECORD_CHANGE')
     triggerStateEvent(this, 'RECORD_NOTE')
     triggerStateEvent(this, 'SELECTED_TRACK')
