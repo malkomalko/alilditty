@@ -13,6 +13,10 @@ export default class ClipSequencer extends React.Component {
   }
   render() {
     return <div className="ClipSequencer">
+      <div className="clipTriggers">
+      </div>
+      <div className="sequences">
+      </div>
     </div>
   }
   setupEvents() {

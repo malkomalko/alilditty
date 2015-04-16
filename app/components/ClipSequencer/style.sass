@@ -1,7 +1,30 @@
 @import ../../css/mixins.sass
 
 .ClipSequencer
-  background-color: red
-  height: 100px
+  background-color: #A09C97
+  border-radius: 4px
+  height: calc(100% - 120px)
+  margin: 100px 20px 20px 20px
+  opacity: 0.9
   transition: all 0.3s ease-in-out
-  width: 100px
+  width: calc(100% - 40px)
+
+  .clipTriggers
+    background-color: #F58E99
+    border-radius: 4px
+    float: left
+    height: calc(100% - 40px)
+    margin: 20px 0 20px 20px
+    position: relative
+    transition: all 0.3s ease-in-out
+    width: calc(70% - 40px)
+
+  .sequences
+    background-color: #6AC6D6
+    border-radius: 4px
+    float: left
+    height: calc(100% - 40px)
+    margin: 20px
+    position: relative
+    transition: all 0.3s ease-in-out
+    width: calc(30% - 20px)
