@@ -1,6 +1,7 @@
 import React from 'react'
 import {Events, EventNames} from '../../events'
 import Icon from '../Icon'
+import Mixer from '../Mixer'
 import Modal from '../Modal'
 import ToggleIcon from '../ToggleIcon'
 
@@ -40,7 +41,7 @@ export default class Transport extends React.Component {
         <div className="step step3"></div>
         <div className="step step4"></div>
       </div>
-      <Icon ref="Mixer" className="Mixer"
+      <Icon ref="Mixer" className="MixerIcon"
         type="ion-levels" size="64px"
         color="#FFFFFF" hoverColor="#555555"
         onClick={this.onMixerClick.bind(this)} />
@@ -58,6 +59,7 @@ export default class Transport extends React.Component {
           type="ion-ios-close" size="64px"
           color="#FFFFFF" hoverColor="#F58E99"
           onClick={this.onCloseModalClick.bind(this)} />
+        <Mixer {...this.props} />
       </Modal>
     </div>
   }
