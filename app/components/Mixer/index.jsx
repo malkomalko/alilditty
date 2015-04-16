@@ -22,6 +22,7 @@ export default class Mixer extends React.Component {
     return _.map(this.props.tracks, (track, index) => {
       return <div className="MixerStrip" key={"mixerStrip-" + index}
         onMouseDown={this.onMouseDown.bind(this, index)}
+        onMouseLeave={this.onMouseLeave.bind(this, index)}
         onMouseMove={this.onMouseMove.bind(this, index)}
         onMouseUp={this.onMouseUp.bind(this, index)}>
         <div className="MixerStripHandle" />
@@ -34,6 +35,9 @@ export default class Mixer extends React.Component {
   onMouseDown(index, e) {
     e.persist()
     this.mouseState[index] = true
+  }
+  onMouseLeave(index, e) {
+    this.mouseState[index] = false
   }
   onMouseMove(index, e) {
     if (this.mouseState[index]) {
