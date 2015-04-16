@@ -17,7 +17,8 @@ export default class Transport extends React.Component {
     super(props)
 
     this.state = {
-      isModalOpen: false,
+      isMixerOpen: false,
+      isSequenceOpen: false,
     }
 
     this.metroOn = false
@@ -45,6 +46,10 @@ export default class Transport extends React.Component {
         type="ion-levels" size="64px"
         color="#FFFFFF" hoverColor="#555555"
         onClick={this.onMixerClick.bind(this)} />
+      <Icon ref="Sequence" className="SequenceIcon"
+        type="ion-ios-keypad" size="64px"
+        color="#FFFFFF" hoverColor="#555555"
+        onClick={this.onSequenceClick.bind(this)} />
       <ToggleIcon ref="Record" className="Record"
         type="ion-record" size="64px"
         color="#FFFFFF" hoverColor={hoverColor} onColor={onColor}
@@ -53,13 +58,20 @@ export default class Transport extends React.Component {
         type="ion-ios-time-outline" size="64px"
         color="#FFFFFF" hoverColor="#555555" onColor="#111111"
         onToggle={this.onMetroClick.bind(this)} />
-      <Modal isOpen={this.state.isModalOpen}
+      <Modal isOpen={this.state.isMixerOpen}
         transitionName="modal-anim">
-        <Icon className="Close"
+        <Icon className="MixerClose"
           type="ion-ios-close" size="64px"
           color="#FFFFFF" hoverColor="#F58E99"
-          onClick={this.onCloseModalClick.bind(this)} />
+          onClick={this.onCloseModalClick.bind(this, 'isMixerOpen')} />
         <Mixer {...this.props} />
+      </Modal>
+      <Modal isOpen={this.state.isSequenceOpen}
+        transitionName="modal-anim">
+        <Icon className="SequenceClose"
+          type="ion-ios-close" size="64px"
+          color="#FFFFFF" hoverColor="#F58E99"
+          onClick={this.onCloseModalClick.bind(this, 'isSequenceOpen')} />
       </Modal>
     </div>
   }
@@ -129,17 +141,20 @@ export default class Transport extends React.Component {
       return this.totalMeasures[index] === clipSlot.measures
     })
   }
-  onCloseModalClick(e) {
-    this.setState({ isModalOpen: false })
+  onCloseModalClick(modalType) {
+    this.setState({ [modalType]: false })
   }
   onMetroClick(isOn, component) {
     this.props.events.emit(EventNames.METRO_CHANGE)
   }
   onMixerClick(e) {
-    this.setState({ isModalOpen: true })
+    this.setState({ isMixerOpen: true })
   }
   onRecordClick(isOn, component) {
     this.props.events.emit(EventNames.ARM_RECORD)
+  }
+  onSequenceClick(e) {
+    this.setState({ isSequenceOpen: true })
   }
   playMetro(step) {
     metro.play({
