@@ -11,6 +11,8 @@ var _ = require('lodash')
 var Tone = require('tone')
 var Wad = require('wad')
 
+Tone.Transport.bpm.value = 128
+
 var metro = new Wad({ source: 'sine' })
 
 export default class Transport extends React.Component {
