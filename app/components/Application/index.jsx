@@ -42,6 +42,7 @@ export default class Application extends React.Component {
       sequenceActiveClips: [
         0, 0, 0, 0, 0, 0, 0, 0,
       ],
+      sequences: [],
       toggles: {
         metro: false,
         recording: false,
@@ -79,6 +80,12 @@ export default class Application extends React.Component {
       } else {
         Mousetrap.bind(keyMap[key].keys, handlers[key], 'keyup')
       }
+    })
+
+    this.state.events.on(EventNames.STATE_ADD_SEQUENCE, (payload) => {
+      var sequences = this.state.sequences.slice()
+      sequences.push(payload)
+      this.setState({ sequences })
     })
 
     this.state.events.on(EventNames.STATE_ARM_RECORD, () => {

@@ -80,3 +80,25 @@
       margin: 10px
       position: relative
       width: calc(100% - 20px)
+
+    .sequenceList
+      background-color: #FFFFFF
+      border-radius: 4px
+      height: calc(((100% - 20px) / 8) * 7)
+      margin: 0 10px 10px 10px
+      overflow-y: auto
+      transition: all 0.3s ease-in-out
+      width: calc(100% - 20px)
+
+      .sequenceItem
+        background-color: #FFFFFF
+        border: 1px solid #88CCAC
+        border-radius: 4px
+        margin: 10px
+        height: calc((100% - 20px) / 8)
+        width: calc(100% - 20px)
+
+        p
+          @extend %vertical-align
+          cursor: pointer
+          text-align: center

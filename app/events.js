@@ -2,6 +2,7 @@ import EventEmitter from 'events'
 
 export const EventNames = {
   ARM_RECORD: 'armRecord',
+  ADD_SEQUENCE: 'addSequence',
   CLIP_CHANGE: 'clipChange',
   METRO_CHANGE: 'metroChange',
   MIXER_LEVEL_CHANGE: 'mixerLevelChange',
@@ -13,6 +14,7 @@ export const EventNames = {
   SELECTED_TRACK: 'selectedTrack',
   SEQUENCE_CLIP_CHANGE: 'sequenceClipChange',
 
+  STATE_ADD_SEQUENCE: 'state:addSequence',
   STATE_ARM_RECORD: 'state:armRecord',
   STATE_CLIP_CHANGE: 'state:clipChange',
   STATE_METRO_CHANGE: 'state:metroChange',
@@ -36,6 +38,7 @@ export class Events extends EventEmitter {
     this.setupEvents()
   }
   setupEvents() {
+    triggerStateEvent(this, 'ADD_SEQUENCE')
     triggerStateEvent(this, 'ARM_RECORD')
     triggerStateEvent(this, 'CLIP_CHANGE')
     triggerStateEvent(this, 'METRO_CHANGE')
