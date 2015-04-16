@@ -57,11 +57,19 @@ export default class ClipSequencer extends React.Component {
     })
   }
   sequences() {
+    return <div className="sequenceWrap">
+      <button className="addSequence" onClick={this.addSequence}>
+        Add Sequence
+      </button>
+    </div>
   }
   pStyles(index) {
     return {
       backgroundColor: gridColors[index],
     }
+  }
+  addSequence(e) {
+
   }
   onClick(index, clip, e) {
     this.props.events.emit(EventNames.SEQUENCE_CLIP_CHANGE, {
