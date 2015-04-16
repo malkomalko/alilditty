@@ -133,7 +133,7 @@ export default class Transport extends React.Component {
     this.setState({ isModalOpen: false })
   }
   onMetroClick(isOn, component) {
-    this.metroOn = isOn
+    this.props.events.emit(EventNames.METRO_CHANGE)
   }
   onMixerClick(e) {
     this.setState({ isModalOpen: true })

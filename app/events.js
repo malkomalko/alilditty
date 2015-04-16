@@ -3,6 +3,7 @@ import EventEmitter from 'events'
 export const EventNames = {
   ARM_RECORD: 'armRecord',
   CLIP_CHANGE: 'clipChange',
+  METRO_CHANGE: 'metroChange',
   PLAY_CLIP_FOR_TRACK: 'playClipForTrack',
   PLAY_NOTE_FOR_TRACK: 'playNoteForTrack',
   RECORD_CHANGE: 'recordChange',
@@ -11,6 +12,7 @@ export const EventNames = {
 
   STATE_ARM_RECORD: 'state:armRecord',
   STATE_CLIP_CHANGE: 'state:clipChange',
+  STATE_METRO_CHANGE: 'state:metroChange',
   STATE_RECORD_CHANGE: 'state:recordChange',
   STATE_RECORD_NOTE: 'state:recordNote',
   STATE_SELECTED_TRACK: 'state:selectedTrack',
@@ -31,6 +33,7 @@ export class Events extends EventEmitter {
   setupEvents() {
     triggerStateEvent(this, 'ARM_RECORD')
     triggerStateEvent(this, 'CLIP_CHANGE')
+    triggerStateEvent(this, 'METRO_CHANGE')
     triggerStateEvent(this, 'RECORD_CHANGE')
     triggerStateEvent(this, 'RECORD_NOTE')
     triggerStateEvent(this, 'SELECTED_TRACK')

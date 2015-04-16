@@ -83,6 +83,10 @@ export default class Application extends React.Component {
       this.setState({ activeClips: activeClips })
     })
 
+    this.state.events.on(EventNames.STATE_METRO_CHANGE, (payload) => {
+      handlers.armMetro()
+    })
+
     this.state.events.on(EventNames.STATE_RECORD_CHANGE, (payload) => {
       var track = this.state.selectedTrack
       if (track == null) { return }
