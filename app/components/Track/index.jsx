@@ -187,7 +187,11 @@ export default class Track extends React.Component {
     })
   }
   volumeFor(index) {
-    return parseFloat(this.props.mixer.levels[index]) / 100
+    var volume = parseFloat(this.props.mixer.levels[index]) / 100
+    if (volume === 0) { // 0 does not mute for some reason
+      volume = 0.000000001
+    }
+    return volume
   }
   stopNote(pitch, label, fromClip = false) {
     if (this.props.isRecording && !fromClip) {
